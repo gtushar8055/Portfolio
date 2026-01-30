@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Smooth scrolling for anchor navigation */
+html {
+  scroll-behavior: smooth;
+}
+
+/* Offset for fixed navbar when scrolling to sections */
+[id] {
+  scroll-margin-top: 80px;
+}
