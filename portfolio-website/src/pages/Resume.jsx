@@ -19,7 +19,7 @@ const Resume = () => {
     {
       icon: FaGraduationCap,
       title: "Education",
-      points: ["B.Tech in Computer Science", "IIIT Sonepat (2022-2026)"],
+      points: ["B.Tech in Information Technology", "IIIT Sonepat (2023-2027)"],
       color: "amber",
     },
     {
@@ -31,13 +31,13 @@ const Resume = () => {
     {
       icon: FaBriefcase,
       title: "Projects",
-      points: ["Gadget Hub - E-commerce", "Vyapaar360 - Business Platform"],
+      points: ["Gadget Hub - E-commerce", "Vyapaar360 - Business Platform" , "For More Visit My Github Profile"],
       color: "orange",
     },
     {
       icon: FaAward,
       title: "Achievements",
-      points: ["Competitive Programming", "10+ Full-Stack Projects"],
+      points: ["Competitive Programming", "5+ Good Projects"],
       color: "amber",
     },
   ];

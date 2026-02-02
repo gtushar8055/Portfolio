@@ -59,7 +59,7 @@ const Navbar = () => {
                   Tushar Gupta
                 </span>
                 <span className="text-xs text-yellow-400/80 font-medium tracking-widest uppercase">
-                  Developer
+                  Developer / Coder / Student
                 </span>
               </div>
             </a>
