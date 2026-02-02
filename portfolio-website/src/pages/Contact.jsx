@@ -1,14 +1,10 @@
-import React, { useState, useRef, useEffect } from "react";
-import { FaEnvelope, FaEye, FaLinkedin, FaGithub } from "react-icons/fa";
+import React, { useState, useRef } from "react";
+import { FaEnvelope, FaLinkedin, FaGithub } from "react-icons/fa";
 import { HiSparkles, HiMail } from "react-icons/hi";
 
 const Contact = () => {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
-  const [visitorCount, setVisitorCount] = useState(0);
   const formRef = useRef(null);
-
-  // Your unique namespace for the counter API
-  const COUNTER_NAMESPACE = "tushar-portfolio-2026";
 
   // Your email for contact
   const myEmail = "tushargupta12312021@gmail.com";
@@ -26,28 +22,6 @@ const Contact = () => {
       y: Math.max(-4, Math.min(6, eyeY)),
     });
   };
-
-  // Fetch visitor count from free Counter API
-  useEffect(() => {
-    const hasVisited = sessionStorage.getItem("hasVisited");
-
-    if (!hasVisited) {
-      // New visitor - increment and get new count
-      fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/visitors/up`)
-        .then((res) => res.json())
-        .then((data) => {
-          setVisitorCount(data.count || 0);
-          sessionStorage.setItem("hasVisited", "true");
-        })
-        .catch(() => setVisitorCount(0));
-    } else {
-      // Returning visitor in same session - just get current count
-      fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/visitors`)
-        .then((res) => res.json())
-        .then((data) => setVisitorCount(data.count || 0))
-        .catch(() => setVisitorCount(0));
-    }
-  }, []);
 
   // Open Gmail website
   const openGmail = () => {
@@ -235,44 +209,34 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Visitor Counter Section */}
+        {/* Thank You Message */}
         <div className="mt-20 flex justify-center">
-          <div className="group w-full max-w-sm flex flex-col items-center p-8 rounded-2xl bg-gradient-to-br from-yellow-500/10 via-white/5 to-amber-500/5 backdrop-blur-md border border-yellow-500/20 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(250,204,21,0.15)] transition-all duration-500 relative overflow-hidden">
+          <div className="relative group px-12 py-10 rounded-2xl bg-gradient-to-br from-yellow-500/10 via-white/5 to-amber-500/5 backdrop-blur-md border border-yellow-500/20 hover:border-yellow-400/50 transition-all duration-500 overflow-hidden">
             {/* Glowing background effect */}
-            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <div className="absolute -top-20 -right-20 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl group-hover:bg-yellow-500/20 transition-all duration-500"></div>
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-yellow-500/20 rounded-full blur-3xl animate-pulse"></div>
+            <div
+              className="absolute -bottom-20 -left-20 w-40 h-40 bg-amber-500/20 rounded-full blur-3xl animate-pulse"
+              style={{ animationDelay: "1s" }}
+            ></div>
 
-            <div className="relative z-10 flex items-center gap-2 text-gray-300 text-sm font-medium mb-6">
-              <div className="p-2 rounded-lg bg-yellow-500/20 group-hover:bg-yellow-500/30 transition-all duration-300">
-                <FaEye className="w-4 h-4 text-yellow-400 group-hover:text-yellow-300" />
+            {/* Content */}
+            <div className="relative z-10 text-center">
+              <h3 className="text-3xl sm:text-4xl font-bold text-white mb-3 group-hover:scale-105 transition-transform duration-300">
+                <span className="inline-block animate-pulse">✨</span>
+                <span className="mx-2 bg-gradient-to-r from-yellow-300 via-amber-400 to-yellow-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(250,204,21,0.5)]">
+                  Thanks for Visiting
+                </span>
+                <span className="inline-block animate-pulse">✨</span>
+              </h3>
+              <div className="mt-6 flex justify-center">
+                <img
+                  src="/Radhe_Radhe.png"
+                  alt="Radhe Radhe"
+                  className="h-16 sm:h-20 object-contain drop-shadow-[0_0_30px_rgba(251,146,60,0.6)] animate-pulse group-hover:scale-110 transition-transform duration-300"
+                />
               </div>
-              <span className="group-hover:text-white transition-colors duration-300">
-                Unique Visitors
-              </span>
             </div>
-
-            {/* Counter Display */}
-            <div className="relative z-10 flex items-center gap-1.5 mb-5">
-              {visitorCount
-                .toString()
-                .padStart(5, "0")
-                .split("")
-                .map((digit, index) => (
-                  <div
-                    key={index}
-                    className="w-11 h-16 bg-gradient-to-b from-gray-800/80 to-gray-900/90 rounded-xl border border-yellow-500/20 group-hover:border-yellow-500/40 flex items-center justify-center shadow-lg shadow-yellow-500/5 group-hover:shadow-yellow-500/20 transition-all duration-300 backdrop-blur-sm"
-                    style={{ animationDelay: `${index * 0.1}s` }}
-                  >
-                    <span className="text-2xl font-bold bg-gradient-to-b from-yellow-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-lg">
-                      {digit}
-                    </span>
-                  </div>
-                ))}
-            </div>
-
-            <p className="relative z-10 text-gray-400 text-xs group-hover:text-yellow-300/70 transition-colors duration-300">
-              Thanks for visiting! 🙏
-            </p>
           </div>
         </div>
       </div>
