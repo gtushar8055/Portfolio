@@ -31,7 +31,11 @@ const Resume = () => {
     {
       icon: FaBriefcase,
       title: "Projects",
-      points: ["Gadget Hub - E-commerce", "Vyapaar360 - Business Platform" , "For More Visit My Github Profile"],
+      points: [
+        "Gadget Hub - E-commerce",
+        "Vyapaar360 - Business Platform",
+        "For More Visit My Github Profile",
+      ],
       color: "orange",
     },
     {
@@ -134,7 +138,7 @@ const Resume = () => {
               onClick={() => setIsPreviewOpen(true)}
             >
               <iframe
-                src="/Tushar_Resume.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0&page=1&zoom=page-fit"
+                src="/Tushar_Resume_Portfolio.pdf#view=FitH&toolbar=0&navpanes=0&scrollbar=0&page=1&zoom=page-fit"
                 title="Resume Preview"
                 className="w-full h-full border-0 scale-100"
                 style={{
@@ -153,7 +157,7 @@ const Resume = () => {
 
             {/* Download Button */}
             <a
-              href="/Tushar_Resume.pdf"
+              href="/Tushar_Resume_Portfolio.pdf"
               download="Tushar_Gupta_Resume.pdf"
               className="flex items-center justify-center gap-3 mt-6 w-full px-6 py-4 bg-gradient-to-r from-yellow-500 via-amber-500 to-yellow-500 text-black font-bold rounded-xl hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all duration-300 hover:scale-[1.02] group"
             >
@@ -243,14 +247,14 @@ const Resume = () => {
             onClick={(e) => e.stopPropagation()}
           >
             <iframe
-              src="/Tushar_Resume.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH"
+              src="/Tushar_Resume_Portfolio.pdf#toolbar=1&navpanes=0&scrollbar=1&view=FitH"
               title="Resume Full Preview"
               className="w-full h-full border-0"
             />
 
             {/* Download Button in Modal */}
             <a
-              href="/Tushar_Resume.pdf"
+              href="/Tushar_Resume_Portfolio.pdf"
               download="Tushar_Gupta_Resume.pdf"
               className="absolute bottom-4 right-4 flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-yellow-500 to-amber-500 text-black font-bold rounded-xl hover:shadow-[0_0_30px_rgba(250,204,21,0.5)] transition-all duration-300"
             >

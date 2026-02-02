@@ -1,20 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
-import {
-  FaEnvelope,
-  FaEye,
-  FaHeart,
-  FaLinkedin,
-  FaGithub,
-} from "react-icons/fa";
+import { FaEnvelope, FaEye, FaLinkedin, FaGithub } from "react-icons/fa";
 import { HiSparkles, HiMail } from "react-icons/hi";
 
 const Contact = () => {
   const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [visitorCount, setVisitorCount] = useState(0);
-  const [likeCount, setLikeCount] = useState(0);
-  const [hasLiked, setHasLiked] = useState(false);
-  const [isLiking, setIsLiking] = useState(false);
   const formRef = useRef(null);
+
+  // Your unique namespace for the counter API
+  const COUNTER_NAMESPACE = "tushar-portfolio-2026";
 
   // Your email for contact
   const myEmail = "tushargupta12312021@gmail.com";
@@ -33,46 +27,27 @@ const Contact = () => {
     });
   };
 
-  // Fetch visitor count and like count from localStorage
+  // Fetch visitor count from free Counter API
   useEffect(() => {
-    // Visitor count
-    const storedCount = localStorage.getItem("visitorCount");
     const hasVisited = sessionStorage.getItem("hasVisited");
 
-    let count = storedCount ? parseInt(storedCount) : 0;
-
     if (!hasVisited) {
-      count += 1;
-      localStorage.setItem("visitorCount", count.toString());
-      sessionStorage.setItem("hasVisited", "true");
+      // New visitor - increment and get new count
+      fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/visitors/up`)
+        .then((res) => res.json())
+        .then((data) => {
+          setVisitorCount(data.count || 0);
+          sessionStorage.setItem("hasVisited", "true");
+        })
+        .catch(() => setVisitorCount(0));
+    } else {
+      // Returning visitor in same session - just get current count
+      fetch(`https://api.counterapi.dev/v1/${COUNTER_NAMESPACE}/visitors`)
+        .then((res) => res.json())
+        .then((data) => setVisitorCount(data.count || 0))
+        .catch(() => setVisitorCount(0));
     }
-
-    setVisitorCount(count);
-
-    // Like count
-    const storedLikes = localStorage.getItem("portfolioLikes");
-    const userLiked = localStorage.getItem("userHasLiked");
-
-    setLikeCount(storedLikes ? parseInt(storedLikes) : 0);
-    setHasLiked(userLiked === "true");
   }, []);
-
-  // Handle like button click
-  const handleLike = () => {
-    if (hasLiked || isLiking) return;
-
-    setIsLiking(true);
-
-    // Animate and update
-    setTimeout(() => {
-      const newLikeCount = likeCount + 1;
-      setLikeCount(newLikeCount);
-      setHasLiked(true);
-      localStorage.setItem("portfolioLikes", newLikeCount.toString());
-      localStorage.setItem("userHasLiked", "true");
-      setIsLiking(false);
-    }, 300);
-  };
 
   // Open Gmail website
   const openGmail = () => {
@@ -260,138 +235,44 @@ const Contact = () => {
           </div>
         </div>
 
-        {/* Visitor Counter & Like Section */}
-        <div className="mt-20">
-          <div className="flex flex-col sm:flex-row items-stretch justify-center gap-6 sm:gap-8">
-            {/* Visitor Counter */}
-            <div className="group w-full sm:w-80 flex flex-col items-center justify-between p-8 rounded-2xl bg-gradient-to-br from-yellow-500/10 via-white/5 to-amber-500/5 backdrop-blur-md border border-yellow-500/20 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(250,204,21,0.15)] transition-all duration-500 relative overflow-hidden">
-              {/* Glowing background effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl group-hover:bg-yellow-500/20 transition-all duration-500"></div>
+        {/* Visitor Counter Section */}
+        <div className="mt-20 flex justify-center">
+          <div className="group w-full max-w-sm flex flex-col items-center p-8 rounded-2xl bg-gradient-to-br from-yellow-500/10 via-white/5 to-amber-500/5 backdrop-blur-md border border-yellow-500/20 hover:border-yellow-400/50 hover:shadow-[0_0_40px_rgba(250,204,21,0.15)] transition-all duration-500 relative overflow-hidden">
+            {/* Glowing background effect */}
+            <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div className="absolute -top-20 -right-20 w-40 h-40 bg-yellow-500/10 rounded-full blur-3xl group-hover:bg-yellow-500/20 transition-all duration-500"></div>
 
-              <div className="relative z-10 flex items-center gap-2 text-gray-300 text-sm font-medium mb-6">
-                <div className="p-2 rounded-lg bg-yellow-500/20 group-hover:bg-yellow-500/30 transition-all duration-300">
-                  <FaEye className="w-4 h-4 text-yellow-400 group-hover:text-yellow-300" />
-                </div>
-                <span className="group-hover:text-white transition-colors duration-300">
-                  Unique Visitors
-                </span>
+            <div className="relative z-10 flex items-center gap-2 text-gray-300 text-sm font-medium mb-6">
+              <div className="p-2 rounded-lg bg-yellow-500/20 group-hover:bg-yellow-500/30 transition-all duration-300">
+                <FaEye className="w-4 h-4 text-yellow-400 group-hover:text-yellow-300" />
               </div>
-
-              {/* Counter Display */}
-              <div className="relative z-10 flex items-center gap-1.5 mb-5">
-                {visitorCount
-                  .toString()
-                  .padStart(5, "0")
-                  .split("")
-                  .map((digit, index) => (
-                    <div
-                      key={index}
-                      className="w-11 h-16 bg-gradient-to-b from-gray-800/80 to-gray-900/90 rounded-xl border border-yellow-500/20 group-hover:border-yellow-500/40 flex items-center justify-center shadow-lg shadow-yellow-500/5 group-hover:shadow-yellow-500/20 transition-all duration-300 backdrop-blur-sm"
-                      style={{ animationDelay: `${index * 0.1}s` }}
-                    >
-                      <span className="text-2xl font-bold bg-gradient-to-b from-yellow-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-lg">
-                        {digit}
-                      </span>
-                    </div>
-                  ))}
-              </div>
-
-              <p className="relative z-10 text-gray-400 text-xs group-hover:text-yellow-300/70 transition-colors duration-300">
-                Thanks for visiting! 🙏
-              </p>
+              <span className="group-hover:text-white transition-colors duration-300">
+                Unique Visitors
+              </span>
             </div>
 
-            {/* Like Counter / Show Support */}
-            <div className="group w-full sm:w-80 flex flex-col items-center justify-between p-8 rounded-2xl bg-gradient-to-br from-pink-500/10 via-white/5 to-red-500/5 backdrop-blur-md border border-pink-500/20 hover:border-pink-400/50 hover:shadow-[0_0_40px_rgba(236,72,153,0.15)] transition-all duration-500 relative overflow-hidden">
-              {/* Glowing background effect */}
-              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              <div className="absolute -top-20 -right-20 w-40 h-40 bg-pink-500/10 rounded-full blur-3xl group-hover:bg-pink-500/20 transition-all duration-500"></div>
-
-              <div className="relative z-10 flex items-center gap-2 text-gray-300 text-sm font-medium mb-6">
-                <div className="p-2 rounded-lg bg-pink-500/20 group-hover:bg-pink-500/30 transition-all duration-300">
-                  <FaHeart className="w-4 h-4 text-pink-400 group-hover:text-pink-300" />
-                </div>
-                <span className="group-hover:text-white transition-colors duration-300">
-                  Show Your Love & Support
-                </span>
-              </div>
-
-              {/* Like Button & Count */}
-              <button
-                onClick={handleLike}
-                disabled={hasLiked}
-                className={`relative z-10 flex flex-col items-center transition-all duration-300 ${
-                  hasLiked
-                    ? "cursor-default"
-                    : "cursor-pointer hover:scale-105 active:scale-95"
-                }`}
-              >
-                {/* Heart Icon */}
-                <div
-                  className={`relative w-14 h-14 flex items-center justify-center rounded-full transition-all duration-300 mb-5 ${
-                    hasLiked
-                      ? "bg-gradient-to-br from-pink-500/40 to-red-500/40 shadow-lg shadow-pink-500/30"
-                      : "bg-white/5 hover:bg-pink-500/20"
-                  }`}
-                >
-                  <FaHeart
-                    className={`w-7 h-7 transition-all duration-300 ${
-                      hasLiked
-                        ? "text-pink-400 scale-110 drop-shadow-[0_0_10px_rgba(236,72,153,0.8)]"
-                        : "text-gray-400 group-hover:text-pink-400"
-                    } ${isLiking ? "animate-ping" : ""}`}
-                  />
-                  {/* Floating hearts animation on like */}
-                  {isLiking && (
-                    <>
-                      <FaHeart className="absolute w-4 h-4 text-pink-400 animate-bounce -top-2 -left-1" />
-                      <FaHeart
-                        className="absolute w-3 h-3 text-red-400 animate-bounce -top-3 right-0"
-                        style={{ animationDelay: "0.1s" }}
-                      />
-                      <FaHeart
-                        className="absolute w-3 h-3 text-pink-300 animate-bounce -top-1 -right-2"
-                        style={{ animationDelay: "0.2s" }}
-                      />
-                    </>
-                  )}
-                  {/* Pulse ring when liked */}
-                  {hasLiked && (
-                    <div className="absolute inset-0 rounded-full border-2 border-pink-400/50 animate-pulse"></div>
-                  )}
-                </div>
-
-                {/* Like Count Display */}
-                <div className="flex items-center gap-1.5">
-                  {likeCount
-                    .toString()
-                    .padStart(5, "0")
-                    .split("")
-                    .map((digit, index) => (
-                      <div
-                        key={index}
-                        className="w-11 h-16 bg-gradient-to-b from-gray-800/80 to-gray-900/90 rounded-xl border border-pink-500/20 group-hover:border-pink-500/40 flex items-center justify-center shadow-lg shadow-pink-500/5 group-hover:shadow-pink-500/20 transition-all duration-300 backdrop-blur-sm"
-                      >
-                        <span className="text-2xl font-bold bg-gradient-to-b from-pink-200 via-pink-400 to-red-500 bg-clip-text text-transparent drop-shadow-lg">
-                          {digit}
-                        </span>
-                      </div>
-                    ))}
-                </div>
-              </button>
-
-              {/* Status Text */}
-              <p
-                className={`relative z-10 text-xs mt-5 transition-all duration-300 ${
-                  hasLiked
-                    ? "text-pink-400 drop-shadow-[0_0_8px_rgba(236,72,153,0.5)]"
-                    : "text-gray-400 group-hover:text-pink-300/70"
-                }`}
-              >
-                {hasLiked ? "Thanks for the love! ❤️" : "Tap to like! 💗"}
-              </p>
+            {/* Counter Display */}
+            <div className="relative z-10 flex items-center gap-1.5 mb-5">
+              {visitorCount
+                .toString()
+                .padStart(5, "0")
+                .split("")
+                .map((digit, index) => (
+                  <div
+                    key={index}
+                    className="w-11 h-16 bg-gradient-to-b from-gray-800/80 to-gray-900/90 rounded-xl border border-yellow-500/20 group-hover:border-yellow-500/40 flex items-center justify-center shadow-lg shadow-yellow-500/5 group-hover:shadow-yellow-500/20 transition-all duration-300 backdrop-blur-sm"
+                    style={{ animationDelay: `${index * 0.1}s` }}
+                  >
+                    <span className="text-2xl font-bold bg-gradient-to-b from-yellow-200 via-yellow-400 to-amber-500 bg-clip-text text-transparent drop-shadow-lg">
+                      {digit}
+                    </span>
+                  </div>
+                ))}
             </div>
+
+            <p className="relative z-10 text-gray-400 text-xs group-hover:text-yellow-300/70 transition-colors duration-300">
+              Thanks for visiting! 🙏
+            </p>
           </div>
         </div>
       </div>

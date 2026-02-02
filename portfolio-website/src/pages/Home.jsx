@@ -163,7 +163,7 @@ const Home = () => {
               View My Work
             </a>
             <a
-              href="/Tushar_Resume.pdf"
+              href="/Tushar_Resume_Portfolio.pdf"
               download
               className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-yellow-400/50 text-yellow-400 font-bold rounded-full hover:bg-yellow-400/10 hover:border-yellow-400 hover:shadow-[0_0_30px_rgba(250,204,21,0.2)] transition-all duration-300 text-sm sm:text-base backdrop-blur-sm text-center"
             >
