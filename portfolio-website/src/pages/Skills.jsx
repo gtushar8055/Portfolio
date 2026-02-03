@@ -27,7 +27,6 @@ const Skills = () => {
       description:
         "Full-stack web development with React, Node.js, Express & MongoDB.",
       details: ["React.js", "Node.js", "Express.js", "MongoDB"],
-      repoLink: "https://github.com/gtushar8055/mern-project",
     },
     {
       id: 2,
@@ -35,7 +34,6 @@ const Skills = () => {
       title: "Databases",
       description: "Experience with both SQL (MySQL) & NoSQL (MongoDB).",
       details: ["MySQL", "MongoDB", "PostgreSQL", "Redis"],
-      repoLink: "https://github.com/gtushar8055/database-project",
     },
     {
       id: 3,
@@ -43,7 +41,6 @@ const Skills = () => {
       title: "Programming",
       description: "Strong in C++ (DSA, OOPs) & Python for scripting & ML.",
       details: ["C++", "Python", "JavaScript", "TypeScript"],
-      repoLink: "https://github.com/gtushar8055/dsa-practice",
     },
     {
       id: 4,
@@ -52,7 +49,6 @@ const Skills = () => {
       description:
         "Learning ML concepts with NumPy, Pandas, Seaborn, Scikit-learn.",
       details: ["NumPy", "Pandas", "Scikit-learn", "TensorFlow"],
-      repoLink: "https://github.com/gtushar8055/ml-project",
     },
     {
       id: 5,
@@ -61,7 +57,6 @@ const Skills = () => {
       description:
         "Version control using Git for collaboration & project management.",
       details: ["Git", "GitHub", "VS Code", "Postman"],
-      repoLink: "https://github.com/gtushar8055",
     },
     {
       id: 6,
@@ -70,7 +65,6 @@ const Skills = () => {
       description:
         "Creating beautiful, responsive UIs with modern CSS frameworks.",
       details: ["Tailwind CSS", "Bootstrap", "Sass", "Framer Motion"],
-      repoLink: "https://github.com/gtushar8055",
     },
   ];
 
@@ -296,8 +290,6 @@ const Skills = () => {
                   return (
                     <g
                       key={skill.id}
-                      onMouseEnter={() => setActiveSkill(skill.id)}
-                      onMouseLeave={() => setActiveSkill(null)}
                       onClick={() =>
                         setActiveSkill(
                           activeSkill === skill.id ? null : skill.id,
@@ -398,14 +390,9 @@ const Skills = () => {
                           <p className="text-amber-400 font-bold text-2xl">
                             {skill.title}
                           </p>
-                          <a
-                            href={skill.repoLink}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="text-sm text-amber-400/70 hover:text-amber-300 transition-colors flex items-center gap-1"
-                          >
-                            View Projects <span>→</span>
-                          </a>
+                          <p className="text-sm text-amber-400/70">
+                            Skill Showcase
+                          </p>
                         </div>
                       </div>
 
@@ -452,7 +439,7 @@ const Skills = () => {
                       Ready to Explore?
                     </h3>
                     <p className="text-gray-400 text-base mb-4">
-                      Hover over any skill segment to discover my expertise
+                      Click on any skill segment to discover my expertise
                     </p>
 
                     {/* Animated arrow indicators */}
@@ -589,14 +576,9 @@ const Skills = () => {
                         <p className="text-amber-400 font-bold text-xl">
                           {skill.title}
                         </p>
-                        <a
-                          href={skill.repoLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="text-xs text-amber-400/70 hover:text-amber-300"
-                        >
-                          View Projects →
-                        </a>
+                        <p className="text-xs text-amber-400/70">
+                          Skill Showcase
+                        </p>
                       </div>
                     </div>
                     <p className="text-gray-300 mb-4">{skill.description}</p>
